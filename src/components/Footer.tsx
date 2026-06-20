@@ -1,7 +1,8 @@
-import { Mail, Phone, MessageSquare, ShieldCheck, Globe, Share2 } from 'lucide-react';
+import { Mail, Phone, MessageSquare, ShieldCheck, Globe, Share2, ShieldAlert } from 'lucide-react';
+import { MainView } from '../types';
 
 interface FooterProps {
-  onViewChange: (view: 'home' | 'pricing' | 'book' | 'confirmed') => void;
+  onViewChange: (view: MainView) => void;
 }
 
 export default function Footer({ onViewChange }: FooterProps) {
@@ -139,9 +140,18 @@ export default function Footer({ onViewChange }: FooterProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 mt-12 pt-6 border-t border-surface-container-highest flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-on-surface-variant text-xs text-center md:text-left">
-          © 2026 CleanSerene Professional Cleaning Services. All rights reserved.
-        </p>
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+          <p className="text-on-surface-variant text-xs text-center md:text-left">
+            © 2026 CleanSerene Professional Cleaning Services. All rights reserved.
+          </p>
+          <button
+            onClick={() => onViewChange('admin')}
+            className="text-[11px] text-primary/60 hover:text-secondary hover:underline font-bold transition-all cursor-pointer flex items-center gap-1"
+          >
+            <ShieldAlert className="w-3.5 h-3.5" />
+            <span>Admin Portal</span>
+          </button>
+        </div>
         <p className="text-on-surface-variant text-[11px] flex items-center space-x-1">
           <ShieldCheck className="w-3.5 h-3.5 text-secondary inline" />
           <span>Vetted Professionals & Fully Bonded Insurance Coverage</span>

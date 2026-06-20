@@ -6,6 +6,8 @@ import HomeView from './components/HomeView';
 import PricingView from './components/PricingView';
 import BookingFormView from './components/BookingFormView';
 import ConfirmedView from './components/ConfirmedView';
+import AdminView from './components/AdminView';
+import { db, collection, addDoc, Timestamp } from './lib/firebase';
 
 const initialBookingState: BookingState = {
   cleanType: 'standard',
@@ -40,7 +42,36 @@ export default function App() {
     setCurrentView('book');
   };
 
-  const handleSubmitBooking = () => {
+  const handleSubmitBooking = async () => {
+    const base = bookingState.cleanType === 'deep' ? 100 : 60;
+    const bedCost = bookingState.bedrooms * 25;
+    const bathCost = bookingState.bathrooms * 15;
+    const fee = 5.00;
+    const total = base + bedCost + bathCost + fee;
+
+    try {
+      await addDoc(collection(db, 'bookings'), {
+        cleanType: bookingState.cleanType,
+        bedrooms: bookingState.bedrooms,
+        bathrooms: bookingState.bathrooms,
+        date: bookingState.date,
+        timeSlot: bookingState.timeSlot,
+        fullName: bookingState.fullName,
+        email: bookingState.email,
+        phone: bookingState.phone,
+        address: bookingState.address,
+        city: bookingState.city,
+        zipCode: bookingState.zipCode,
+        specialInstructions: bookingState.specialInstructions,
+        totalPrice: total,
+        status: 'pending',
+        createdAt: Timestamp.now()
+      });
+      console.log("Successfully wrote booking record to Cloud Firestore!");
+    } catch (err) {
+      console.error("Graceful Fallback - Failed to write to Cloud Firestore database:", err);
+    }
+    
     setCurrentView('confirmed');
   };
 
@@ -83,6 +114,10 @@ export default function App() {
             bookingState={bookingState} 
             onReset={handleResetApp} 
           />
+        )}
+
+        {currentView === 'admin' && (
+          <AdminView onBackToHome={() => setCurrentView('home')} />
         )}
       </main>
 

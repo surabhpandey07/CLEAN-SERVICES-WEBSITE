@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { MainView } from '../types';
 
 interface HeaderProps {
-  currentView: 'home' | 'pricing' | 'book' | 'confirmed';
-  onViewChange: (view: 'home' | 'pricing' | 'book' | 'confirmed') => void;
+  currentView: MainView;
+  onViewChange: (view: MainView) => void;
 }
 
 export default function Header({ currentView, onViewChange }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleLinkClick = (view: 'home' | 'pricing' | 'book' | 'confirmed', sectionId?: string) => {
+  const handleLinkClick = (view: MainView, sectionId?: string) => {
     onViewChange(view);
     setIsMobileMenuOpen(false);
     if (sectionId) {

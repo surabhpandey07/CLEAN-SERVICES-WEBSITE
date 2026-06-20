@@ -1,4 +1,4 @@
-export type MainView = 'home' | 'pricing' | 'book' | 'confirmed';
+export type MainView = 'home' | 'pricing' | 'book' | 'confirmed' | 'admin';
 
 export interface BookingState {
   cleanType: 'standard' | 'deep';
@@ -13,6 +13,13 @@ export interface BookingState {
   city: string;
   zipCode: string;
   specialInstructions: string;
+}
+
+export interface FirebaseBooking extends BookingState {
+  id: string;
+  createdAt: any;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  totalPrice: number;
 }
 
 export interface FAQItem {
