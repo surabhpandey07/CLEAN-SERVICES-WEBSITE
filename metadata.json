@@ -1,0 +1,6 @@
+{
+  "name": "CleanSerene",
+  "description": "Premium professional cleaning service website and interactive scheduling system.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
